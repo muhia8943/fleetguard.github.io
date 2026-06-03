@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FleetGuard Tracking Company</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #C8181D;
+    --red-dark: #9B0F13;
+    --red-light: #E02025;
+    --bg: #F7F6F3;
+    --bg-2: #FFFFFF;
+    --bg-3: #EEECEA;
+    --bg-4: #E4E2DE;
+    --ink: #141414;
+    --ink-2: #2E2E2E;
+    --muted: #717171;
+    --muted-2: #9A9A9A;
+    --border: #DDDBD7;
+    --border-strong: #C4C2BE;
+    --silver-accent: #5A5E6B;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 4rem; height: 70px;
+    background: rgba(247,246,243,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-shield {
+    width: 36px; height: 40px;
+    background: var(--ink);
+    clip-path: polygon(50% 0%, 100% 15%, 100% 60%, 50% 100%, 0% 60%, 0% 15%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .nav-shield::after {
+    content: '';
+    width: 10px; height: 10px;
+    background: var(--red);
+    border-radius: 50%;
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -60%);
+  }
+  .nav-logo-text { display: flex; flex-direction: column; line-height: 1; }
+  .nav-logo-main {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 21px; letter-spacing: 2px; color: var(--ink);
+  }
+  .nav-logo-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px; letter-spacing: 4px; color: var(--red); text-transform: uppercase;
+  }
+  .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    background: var(--red) !important; color: #fff !important;
+    padding: 9px 22px; border-radius: 2px; font-weight: 600 !important;
+  }
+  .nav-cta:hover { background: var(--red-light) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: 110px 4rem 80px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; gap: 5rem;
+    background: var(--bg-2);
+    position: relative; overflow: hidden;
+  }
+  .hero-diagonal {
+    position: absolute; top: 0; right: 0;
+    width: 50%; height: 100%;
+    background: var(--bg);
+    clip-path: polygon(8% 0%, 100% 0%, 100% 100%, 0% 100%);
+    z-index: 0;
+  }
+  .hero-left { position: relative; z-index: 2; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--red); margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before { content: ''; width: 28px; height: 1.5px; background: var(--red); }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(60px, 6vw, 92px);
+    line-height: 0.92; letter-spacing: 2px; color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .hero-title span { color: var(--red); }
+  .hero-tagline {
+    font-size: 17px; color: var(--muted); line-height: 1.75;
+    margin-bottom: 2.5rem; max-width: 480px;
+  }
+  .hero-tagline strong { color: var(--ink-2); font-weight: 600; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--red); color: #fff;
+    padding: 13px 30px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    border: none; border-radius: 2px; cursor: pointer; text-decoration: none;
+    transition: background 0.2s, transform 0.15s; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--red-light); transform: translateY(-1px); }
+  .btn-outline {
+    color: var(--ink); padding: 13px 30px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    border: 1.5px solid var(--border-strong); border-radius: 2px;
+    cursor: pointer; text-decoration: none;
+    transition: border-color 0.2s, color 0.2s; display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--ink); }
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3rem; padding-top: 2rem;
+    border-top: 1.5px solid var(--border);
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px; color: var(--ink); letter-spacing: 1px; line-height: 1;
+  }
+  .stat-num span { color: var(--red); }
+  .stat-label {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted-2); margin-top: 4px;
+  }
+
+  /* HERO CARD */
+  .hero-right {
+    position: relative; z-index: 2;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .fleet-card {
+    background: var(--bg-2);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    width: 100%; max-width: 440px;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+  }
+  .card-header {
+    background: var(--ink); color: #fff;
+    padding: 14px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-header-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+  }
+  .live-badge {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: #4ADE80;
+  }
+  .pulse-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: #4ADE80;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .map-area {
+    height: 185px; background: #E8EBF2; position: relative; overflow: hidden;
+  }
+  .map-area svg { width: 100%; height: 100%; }
+  .card-body { padding: 16px 20px; }
+  .v-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+  }
+  .v-row:last-child { border-bottom: none; }
+  .v-left { display: flex; align-items: center; gap: 10px; }
+  .v-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .v-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .v-plate { font-size: 11px; color: var(--muted); letter-spacing: 1px; font-family: monospace; }
+  .v-badge {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 2px;
+  }
+  .badge-moving { background: #DCFCE7; color: #166534; }
+  .badge-stopped { background: #FEE2E2; color: #991B1B; }
+  .badge-idle { background: #FEF9C3; color: #854D0E; }
+
+  /* TICKER */
+  .ticker {
+    background: var(--red); padding: 11px 0; overflow: hidden;
+  }
+  .ticker-track {
+    display: flex; gap: 3rem;
+    animation: ticker 22s linear infinite; width: max-content;
+  }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .ticker-item {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,0.9); white-space: nowrap;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .ticker-item::before { content: '—'; opacity: 0.4; font-size: 10px; }
+
+  /* COMMON SECTION */
+  section { padding: 6rem 4rem; }
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--red);
+    display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;
+  }
+  .section-label::before { content: ''; width: 24px; height: 1.5px; background: var(--red); }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 4vw, 58px); letter-spacing: 2px; line-height: 1;
+    color: var(--ink); margin-bottom: 1rem;
+  }
+  .section-sub { font-size: 16px; color: var(--muted); line-height: 1.75; max-width: 540px; }
+
+  /* SERVICES */
+  .services { background: var(--bg); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; margin-top: 3.5rem;
+    border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+    background: var(--border);
+  }
+  .service-card {
+    background: var(--bg-2); padding: 2.5rem 2rem;
+    position: relative; transition: background 0.2s;
+  }
+  .service-card:hover { background: #FAFAF8; }
+  .service-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px; letter-spacing: 2px; color: var(--red);
+    margin-bottom: 1rem;
+  }
+  .service-icon-line {
+    width: 40px; height: 2px; background: var(--red); margin-bottom: 1.5rem;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .service-card:hover .service-icon-line { transform: scaleX(1); }
+  .service-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 19px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--ink); margin-bottom: 0.75rem;
+  }
+  .service-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+  /* HOW IT WORKS */
+  .how-it-works { background: var(--bg-2); }
+  .steps-row {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    margin-top: 4rem; position: relative;
+  }
+  .steps-connector {
+    position: absolute; top: 27px; left: 13%; right: 13%;
+    height: 1px; background: var(--border); z-index: 0;
+  }
+  .step { text-align: center; padding: 0 1.5rem; position: relative; z-index: 1; }
+  .step-num {
+    width: 54px; height: 54px; border-radius: 50%;
+    border: 2px solid var(--border-strong);
+    background: var(--bg-2);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--ink-2);
+    margin: 0 auto 1.5rem; transition: border-color 0.2s, background 0.2s, color 0.2s;
+  }
+  .step:hover .step-num { border-color: var(--red); color: var(--red); }
+  .step-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--ink); margin-bottom: 0.75rem;
+  }
+  .step-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+  /* FEATURES */
+  .features { background: var(--bg); }
+  .bento {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
+    margin-top: 3.5rem;
+  }
+  .bento-card {
+    background: var(--bg-2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 2rem; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .bento-card:hover { border-color: var(--red); box-shadow: 0 2px 16px rgba(200,24,29,0.07); }
+  .bento-card.wide { grid-column: span 2; }
+  .bento-tag {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--red);
+    margin-bottom: 1rem;
+  }
+  .bento-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--ink); margin-bottom: 0.75rem;
+  }
+  .bento-desc { font-size: 14px; color: var(--muted); line-height: 1.65; }
+  .bento-visual {
+    margin-top: 1.5rem; height: 72px;
+    background: var(--bg-3); border-radius: 5px;
+    display: flex; align-items: center; padding: 0 1.25rem; gap: 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .bento-visual-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
+
+  /* WHY US */
+  .why-us { background: var(--bg-2); }
+  .why-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: start; margin-top: 3rem;
+  }
+  .why-list { list-style: none; display: flex; flex-direction: column; gap: 1.25rem; }
+  .why-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1.5rem; background: var(--bg); border-radius: 6px;
+    border: 1px solid var(--border); transition: border-color 0.2s;
+  }
+  .why-item:hover { border-color: var(--red); }
+  .why-check {
+    width: 26px; height: 26px; flex-shrink: 0;
+    background: var(--red); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 13px; font-weight: 700; margin-top: 1px;
+  }
+  .why-item-title { font-weight: 600; font-size: 15px; color: var(--ink); margin-bottom: 4px; }
+  .why-item-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+  .showcase-panel {
+    background: var(--ink); border-radius: 10px; padding: 2.5rem;
+    position: sticky; top: 90px;
+  }
+  .showcase-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px; letter-spacing: 2px; color: #fff; margin-bottom: 2rem;
+  }
+  .showcase-title span { color: var(--red); }
+  .metric-row { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+  .metric {
+    flex: 1; background: rgba(255,255,255,0.06);
+    border-radius: 6px; padding: 1rem; text-align: center;
+  }
+  .metric-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 34px; color: #fff; line-height: 1;
+  }
+  .metric-val span { color: var(--red); }
+  .metric-key {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(255,255,255,0.4); margin-top: 4px;
+  }
+  .bar-row {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+    font-size: 12px; color: rgba(255,255,255,0.5); font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 1px;
+  }
+  .bar-label { min-width: 90px; }
+  .bar-track {
+    flex: 1; height: 5px; background: rgba(255,255,255,0.1);
+    border-radius: 3px; overflow: hidden;
+  }
+  .bar-fill { height: 100%; background: var(--red); border-radius: 3px; }
+  .bar-pct { min-width: 34px; text-align: right; }
+
+  /* CONTACT */
+  .contact { background: var(--bg); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: start; margin-top: 3.5rem;
+  }
+  .contact-info { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1.25rem 1.5rem; background: var(--bg-2);
+    border-radius: 6px; border: 1px solid var(--border);
+  }
+  .c-icon-box {
+    width: 40px; height: 40px; flex-shrink: 0;
+    background: var(--bg-3); border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .c-icon-box svg { width: 18px; height: 18px; stroke: var(--red); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .c-label {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--muted-2); margin-bottom: 4px;
+  }
+  .c-value { font-size: 15px; font-weight: 500; color: var(--ink); }
+  .c-value a { color: var(--ink); text-decoration: none; }
+  .c-value a:hover { color: var(--red); }
+  .wa-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 13px; background: #128C7E; color: #fff; border-radius: 4px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    text-decoration: none; transition: background 0.2s; margin-top: 0.5rem;
+  }
+  .wa-btn:hover { background: #0F766E; }
+  .wa-btn svg { width: 20px; height: 20px; fill: #fff; }
+
+  .contact-form {
+    background: var(--bg-2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 2.5rem;
+  }
+  .form-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--ink); margin-bottom: 1.5rem;
+  }
+  .form-group { margin-bottom: 1.1rem; }
+  .form-label {
+    display: block; font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 7px;
+  }
+  .form-input {
+    width: 100%; padding: 11px 14px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 4px; color: var(--ink);
+    font-family: 'Barlow', sans-serif; font-size: 14px;
+    outline: none; transition: border-color 0.2s; appearance: none;
+  }
+  .form-input:focus { border-color: var(--red); }
+  .form-input::placeholder { color: var(--muted-2); }
+  textarea.form-input { resize: vertical; min-height: 90px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-submit {
+    width: 100%; padding: 13px; background: var(--red); color: #fff; border: none;
+    border-radius: 4px; cursor: pointer;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    transition: background 0.2s, transform 0.15s; margin-top: 0.5rem;
+  }
+  .form-submit:hover { background: var(--red-light); transform: translateY(-1px); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink); color: rgba(255,255,255,0.7);
+    padding: 3.5rem 4rem 2rem;
+  }
+  .footer-inner {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem; margin-bottom: 3rem;
+  }
+  .footer-brand p {
+    font-size: 13px; line-height: 1.75; margin-top: 1rem; max-width: 240px;
+    color: rgba(255,255,255,0.45);
+  }
+  .footer-nav-main { color: rgba(255,255,255,0.9); }
+  .footer-nav-sub { color: rgba(255,255,255,0.6); }
+  .footer-col h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,0.9); margin-bottom: 1.25rem;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  .footer-col a {
+    font-size: 13px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s;
+  }
+  .footer-col a:hover { color: rgba(255,255,255,0.9); }
+  .footer-bottom {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 12px; color: rgba(255,255,255,0.3);
+  }
+  .footer-bottom span { color: var(--red); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { grid-template-columns: 1fr; padding: 100px 1.5rem 60px; gap: 3rem; }
+    .hero-diagonal { display: none; }
+    .hero-right { display: none; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .steps-row { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .steps-connector { display: none; }
+    .bento { grid-template-columns: 1fr; }
+    .bento-card.wide { grid-column: span 1; }
+    .why-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .showcase-panel { position: static; }
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-brand { grid-column: span 2; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-shield"></div>
+    <div class="nav-logo-text">
+      <span class="nav-logo-main">FleetGuard</span>
+      <span class="nav-logo-sub">Tracking Co.</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#why-us">Why Us</a></li>
+    <li><a href="#contact" class="nav-cta">Get a Quote</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-diagonal"></div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">GPS &amp; Fleet Management Solutions</div>
+    <h1 class="hero-title">Track<br><span>Smarter.</span><br>Drive Safer.</h1>
+    <p class="hero-tagline">Kenya's premier vehicle tracking company. Real-time GPS monitoring for <strong>cars, motorcycles, trucks</strong> and entire fleets — protecting what matters most.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Get a Free Quote</a>
+      <a href="#services" class="btn-outline">Our Services</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">500<span>+</span></div>
+        <div class="stat-label">Vehicles Tracked</div>
+      </div>
+      <div>
+        <div class="stat-num">24<span>/7</span></div>
+        <div class="stat-label">Live Monitoring</div>
+      </div>
+      <div>
+        <div class="stat-num">99<span>%</span></div>
+        <div class="stat-label">Uptime</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="fleet-card">
+      <div class="card-header">
+        <span class="card-header-title">Live Fleet View</span>
+        <span class="live-badge"><span class="pulse-dot"></span>Live</span>
+      </div>
+      <div class="map-area">
+        <svg viewBox="0 0 440 185" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="g" width="44" height="44" patternUnits="userSpaceOnUse">
+              <path d="M44 0L0 0 0 44" fill="none" stroke="rgba(90,94,107,0.12)" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="440" height="185" fill="#E8EBF2"/>
+          <rect width="440" height="185" fill="url(#g)"/>
+          <path d="M0 92 Q80 80 160 92 Q240 104 320 92 Q380 85 440 88" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="14"/>
+          <path d="M0 92 Q80 80 160 92 Q240 104 320 92 Q380 85 440 88" fill="none" stroke="rgba(100,110,130,0.25)" stroke-width="1" stroke-dasharray="8 4"/>
+          <path d="M185 0 Q192 50 188 92 Q184 140 186 185" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="10"/>
+          <rect x="8" y="8" width="92" height="20" rx="3" fill="rgba(200,24,29,0.9)"/>
+          <text x="54" y="22" fill="white" text-anchor="middle" font-family="monospace" font-size="9.5" letter-spacing="1.5">NAIROBI, KE</text>
+          <!-- Vehicle A -->
+          <circle cx="110" cy="92" r="16" fill="rgba(200,24,29,0.1)"/>
+          <circle cx="110" cy="92" r="7" fill="#C8181D"/>
+          <circle cx="110" cy="92" r="22" fill="none" stroke="rgba(200,24,29,0.25)" stroke-width="1">
+            <animate attributeName="r" from="9" to="24" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" from="0.5" to="0" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <!-- Vehicle B -->
+          <circle cx="268" cy="90" r="7" fill="#16A34A"/>
+          <!-- Vehicle C -->
+          <circle cx="360" cy="87" r="7" fill="#CA8A04"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="v-row">
+          <div class="v-left">
+            <div class="v-dot" style="background:#C8181D"></div>
+            <div>
+              <div class="v-name">Toyota Prado</div>
+              <div class="v-plate">KDA 123A</div>
+            </div>
+          </div>
+          <span class="v-badge badge-moving">Moving</span>
+        </div>
+        <div class="v-row">
+          <div class="v-left">
+            <div class="v-dot" style="background:#CA8A04"></div>
+            <div>
+              <div class="v-name">Delivery Bike</div>
+              <div class="v-plate">KMCO 45B</div>
+            </div>
+          </div>
+          <span class="v-badge badge-idle">Idle</span>
+        </div>
+        <div class="v-row">
+          <div class="v-left">
+            <div class="v-dot" style="background:#16A34A"></div>
+            <div>
+              <div class="v-name">Cargo Truck</div>
+              <div class="v-plate">KBZ 789C</div>
+            </div>
+          </div>
+          <span class="v-badge badge-moving">Moving</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">Real-Time GPS Tracking</span>
+    <span class="ticker-item">24/7 Fleet Monitoring</span>
+    <span class="ticker-item">Instant Theft Alerts</span>
+    <span class="ticker-item">Route History Playback</span>
+    <span class="ticker-item">Remote Engine Cut-Off</span>
+    <span class="ticker-item">Geo-Fencing Zones</span>
+    <span class="ticker-item">Serving All Kenya</span>
+    <span class="ticker-item">Real-Time GPS Tracking</span>
+    <span class="ticker-item">24/7 Fleet Monitoring</span>
+    <span class="ticker-item">Instant Theft Alerts</span>
+    <span class="ticker-item">Route History Playback</span>
+    <span class="ticker-item">Remote Engine Cut-Off</span>
+    <span class="ticker-item">Geo-Fencing Zones</span>
+    <span class="ticker-item">Serving All Kenya</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-label">What We Track</div>
+  <h2 class="section-title">Our Tracking Services</h2>
+  <p class="section-sub">Comprehensive GPS solutions for every type of vehicle and fleet operation across Kenya.</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-icon-line"></div>
+      <div class="service-name">Personal Vehicles</div>
+      <p class="service-desc">Protect your private car with real-time location monitoring, theft alerts, and remote immobilization. Peace of mind, always.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-icon-line"></div>
+      <div class="service-name">Motorcycles &amp; Boda Boda</div>
+      <p class="service-desc">Compact trackers for motorbikes. Monitor delivery riders, track mileage, and prevent theft with instant SMS alerts.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-icon-line"></div>
+      <div class="service-name">Trucks &amp; Commercial</div>
+      <p class="service-desc">End-to-end cargo visibility for freight and logistics. Know where your truck is at every moment of the journey.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-icon-line"></div>
+      <div class="service-name">PSV &amp; Matatus</div>
+      <p class="service-desc">Passenger safety tracking for public service vehicles. Monitor speed, routes, and driver behaviour in real time.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <div class="service-icon-line"></div>
+      <div class="service-name">Heavy Machinery</div>
+      <p class="service-desc">Track excavators, generators, and construction equipment. Geo-fence job sites and receive alerts for unauthorized movement.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <div class="service-icon-line"></div>
+      <div class="service-name">Fleet Management</div>
+      <p class="service-desc">Full-suite dashboard for businesses with multiple vehicles. Reports, analytics, driver scoring — all in one platform.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="how-it-works">
+  <div class="section-label">Simple Setup</div>
+  <h2 class="section-title">How It Works</h2>
+  <p class="section-sub">Up and running in under an hour. No technical knowledge required.</p>
+  <div class="steps-row">
+    <div class="steps-connector"></div>
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title">Contact Us</div>
+      <p class="step-desc">Call or WhatsApp us to discuss your needs and receive a competitive, transparent quote for your vehicle type.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title">Device Installation</div>
+      <p class="step-desc">Our certified technicians install the GPS tracker discreetly in your vehicle — typically completed in under 45 minutes.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title">Platform Access</div>
+      <p class="step-desc">Get instant access to your online dashboard and mobile app. View live location, speed, and status immediately.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-title">Track &amp; Protect</div>
+      <p class="step-desc">Receive real-time alerts, replay route history, set geo-fences, and remotely immobilize your vehicle if needed.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-label">Platform Capabilities</div>
+  <h2 class="section-title">Powerful Features</h2>
+  <p class="section-sub">Everything you need to keep your vehicles protected, accountable, and performing.</p>
+  <div class="bento">
+    <div class="bento-card wide">
+      <div class="bento-tag">Core Feature</div>
+      <div class="bento-title">Real-Time GPS Tracking</div>
+      <p class="bento-desc">Live location updates every 10 seconds. See your vehicle's exact position, speed, direction, and status on an interactive map — from anywhere in the world via web or mobile app.</p>
+      <div class="bento-visual"><div class="bento-visual-dot"></div> Live Position · Nairobi, KE · 4G Connected</div>
+    </div>
+    <div class="bento-card">
+      <div class="bento-tag">Security</div>
+      <div class="bento-title">Remote Engine Cut-Off</div>
+      <p class="bento-desc">Immobilize your vehicle remotely via SMS or app if it is stolen or driven without authorization.</p>
+    </div>
+    <div class="bento-card">
+      <div class="bento-tag">Alerts</div>
+      <div class="bento-title">Instant SMS &amp; App Alerts</div>
+      <p class="bento-desc">Theft detection, speeding, geo-fence exit, ignition on/off — instant notifications to your phone, always.</p>
+    </div>
+    <div class="bento-card">
+      <div class="bento-tag">History</div>
+      <div class="bento-title">Route Playback</div>
+      <p class="bento-desc">Replay the complete journey of any vehicle — where it went, how fast, and how long it stopped at each location.</p>
+    </div>
+    <div class="bento-card wide">
+      <div class="bento-tag">Zone Control</div>
+      <div class="bento-title">Geo-Fencing</div>
+      <p class="bento-desc">Draw virtual boundaries on the map. Get alerted the moment your vehicle enters or exits any defined zone — ideal for job sites, delivery zones, or restricted areas.</p>
+      <div class="bento-visual"><div class="bento-visual-dot"></div> Zone Boundary Active · 3 Zones Configured</div>
+    </div>
+    <div class="bento-card">
+      <div class="bento-tag">Analytics</div>
+      <div class="bento-title">Fleet Reports</div>
+      <p class="bento-desc">Fuel consumption, mileage, idle time, driver scoring — detailed analytics for smarter fleet decisions.</p>
+    </div>
+    <div class="bento-card">
+      <div class="bento-tag">Support</div>
+      <div class="bento-title">24/7 Customer Support</div>
+      <p class="bento-desc">Our Nairobi-based team is available around the clock via phone, WhatsApp, or email whenever you need us.</p>
+    </div>
+    <div class="bento-card">
+      <div class="bento-tag">Compatibility</div>
+      <div class="bento-title">Mobile &amp; Web Access</div>
+      <p class="bento-desc">Track on any device — Android, iPhone, tablet, or desktop browser. No additional hardware required.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-us" id="why-us">
+  <div class="section-label">Our Edge</div>
+  <h2 class="section-title">Why FleetGuard?</h2>
+  <div class="why-grid">
+    <ul class="why-list">
+      <li class="why-item">
+        <div class="why-check">&#10003;</div>
+        <div>
+          <div class="why-item-title">Kenya-Based, Kenya-Focused</div>
+          <p class="why-item-desc">We understand local roads, networks, and challenges. Our team operates from Nairobi with nationwide installation reach.</p>
+        </div>
+      </li>
+      <li class="why-item">
+        <div class="why-check">&#10003;</div>
+        <div>
+          <div class="why-item-title">Affordable, Transparent Pricing</div>
+          <p class="why-item-desc">No hidden charges. Competitive device and subscription rates with flexible plans for individuals, SMEs, and large fleets.</p>
+        </div>
+      </li>
+      <li class="why-item">
+        <div class="why-check">&#10003;</div>
+        <div>
+          <div class="why-item-title">Reliable 4G Network Coverage</div>
+          <p class="why-item-desc">Our trackers use Kenya's best mobile networks, ensuring consistent and accurate positioning even in remote areas.</p>
+        </div>
+      </li>
+      <li class="why-item">
+        <div class="why-check">&#10003;</div>
+        <div>
+          <div class="why-item-title">Fast Professional Installation</div>
+          <p class="why-item-desc">Certified technicians install quickly and discreetly. We come to your home, office, or garage — no hassle.</p>
+        </div>
+      </li>
+    </ul>
+    <div class="showcase-panel">
+      <div class="showcase-title">Fleet <span>Health</span> Overview</div>
+      <div class="metric-row">
+        <div class="metric">
+          <div class="metric-val">97<span>%</span></div>
+          <div class="metric-key">On-Route</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">02</div>
+          <div class="metric-key">Alerts Today</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">0</div>
+          <div class="metric-key">Offline Units</div>
+        </div>
+      </div>
+      <div class="bar-row"><span class="bar-label">GPS Signal</span><div class="bar-track"><div class="bar-fill" style="width:96%"></div></div><span class="bar-pct">96%</span></div>
+      <div class="bar-row"><span class="bar-label">Fleet Active</span><div class="bar-track"><div class="bar-fill" style="width:88%"></div></div><span class="bar-pct">88%</span></div>
+      <div class="bar-row"><span class="bar-label">On Schedule</span><div class="bar-track"><div class="bar-fill" style="width:74%"></div></div><span class="bar-pct">74%</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-label">Get In Touch</div>
+  <h2 class="section-title">Contact Us</h2>
+  <p class="section-sub">Ready to protect your vehicle or fleet? Reach out and we will set you up fast.</p>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="c-icon-box">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.06 6.06l.91-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.02z"/></svg>
+        </div>
+        <div>
+          <div class="c-label">Phone / WhatsApp</div>
+          <div class="c-value"><a href="tel:+254731523524">+254 731 523 524</a><br><a href="tel:+254769558659">+254 769 558 659</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="c-icon-box">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div class="c-label">Email</div>
+          <div class="c-value"><a href="mailto:fleetguardtracking@gmail.com">fleetguardtracking@gmail.com</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="c-icon-box">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <div class="c-label">Service Area</div>
+          <div class="c-value">Nairobi &amp; Nationwide, Kenya</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="c-icon-box">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <div class="c-label">Operating Hours</div>
+          <div class="c-value">Mon – Sat: 7:00 AM – 8:00 PM<br>Emergency Support: 24/7</div>
+        </div>
+      </div>
+      <a href="https://wa.me/254731523524" class="wa-btn">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        WhatsApp Us Now
+      </a>
+    </div>
+
+    <div class="contact-form">
+      <div class="form-title">Request a Quote</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-input" placeholder="John Kamau">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" class="form-input" placeholder="+254 7XX XXX XXX">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Vehicle Type</label>
+        <select class="form-input">
+          <option value="">Select vehicle type...</option>
+          <option>Personal Car / SUV</option>
+          <option>Motorcycle / Boda Boda</option>
+          <option>Truck / Lorry</option>
+          <option>Matatu / PSV</option>
+          <option>Bus</option>
+          <option>Construction Machinery</option>
+          <option>Multiple Vehicles (Fleet)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Number of Vehicles</label>
+        <input type="number" class="form-input" placeholder="e.g. 3" min="1">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message (Optional)</label>
+        <textarea class="form-input" placeholder="Tell us about your tracking needs..."></textarea>
+      </div>
+      <button class="form-submit" onclick="this.textContent='Request Sent — We Will Be In Touch Shortly'">Send Request</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo" style="text-decoration:none;">
+        <div class="nav-shield"></div>
+        <div class="nav-logo-text">
+          <span class="nav-logo-main" style="color:#fff;">FleetGuard</span>
+          <span class="nav-logo-sub">Tracking Co.</span>
+        </div>
+      </a>
+      <p>Kenya's trusted GPS vehicle tracking company. Protecting cars, bikes, trucks and fleets with cutting-edge real-time technology.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Personal Vehicles</a></li>
+        <li><a href="#services">Motorcycles</a></li>
+        <li><a href="#services">Trucks &amp; Cargo</a></li>
+        <li><a href="#services">PSV &amp; Matatus</a></li>
+        <li><a href="#services">Fleet Management</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Features</h4>
+      <ul>
+        <li><a href="#features">Live GPS Tracking</a></li>
+        <li><a href="#features">Geo-Fencing</a></li>
+        <li><a href="#features">Route Playback</a></li>
+        <li><a href="#features">SMS Alerts</a></li>
+        <li><a href="#features">Remote Cut-Off</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+254731523524">+254 731 523 524</a></li>
+        <li><a href="tel:+254769558659">+254 769 558 659</a></li>
+        <li><a href="mailto:fleetguardtracking@gmail.com">fleetguardtracking@gmail.com</a></li>
+        <li><a href="https://wa.me/254731523524">WhatsApp Chat</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 FleetGuard Tracking Company. All rights reserved.</span>
+    <span>Nairobi, <span>Kenya</span></span>
+  </div>
+</footer>
+
+</body>
+</html>
